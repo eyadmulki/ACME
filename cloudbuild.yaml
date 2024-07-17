@@ -1,0 +1,10 @@
+steps:
+- name: 'gcr-auth'
+  args: ['--cred', '...']  
+  use: 'gcr/gcloud'
+- name: 'terraform-init'
+  cmd: ['terraform', 'init']
+- name: 'terraform-plan'  # 
+  cmd: ['terraform', 'plan']
+- name: 'deploy' 
+  cmd: ['kubectl', 'apply', '-f', 'deployment.yaml']
