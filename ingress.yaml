@@ -9,5 +9,7 @@ spec:
           - path: /
             pathType: Prefix
             backend:
-              serviceName: acme-hello-app-service
-              servicePort: 443
+              service:
+                name: acme-hello-app-service
+                port:
+                  number: 443
