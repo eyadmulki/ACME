@@ -23,11 +23,3 @@ resource "google_container_cluster" "acme_app_cluster" {
     enabled = true
   }
 }
-
-resource "google_compute_address" "acme_lb_ip" {
-  name         = "acme-lb-ip"
-  subnetwork   = google_compute_subnetwork.acme_subnet.id
-  address_type = "INTERNAL"
-  address      = "10.0.0.100"
-  region       = "europe-west10"
-}
