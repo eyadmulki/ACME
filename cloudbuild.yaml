@@ -1,15 +1,30 @@
 steps:
-- name: 'gcr.io/cloud-builders/gcloud'
-  args: ['auth', 'configure-docker']
-- name: 'gcr.io/cloud-builders/terraform'
-  args: ['init', '-backend=remote']
-- name: 'gcr.io/cloud-builders/terraform'
-  args: ['validate']
-- name: 'gcr.io/cloud-builders/terraform'
-  args: ['apply']
-- name: 'gcr.io/cloud-builders/kubectl'
-  args: ['apply', '-f', 'deployment.yaml']
-- name: 'gcr.io/cloud-builders/kubectl'
-  args: ['apply', '-f', 'service.yaml']
-- name: 'gcr.io/cloud-builders/kubectl'  
-  args: ['apply', '-f', 'ingress.yaml']
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: ['auth', 'configure-docker']
+  - name: 'gcr.io/cloud-builders/terraform'
+    args: ['init', '-backend=remote']
+  - name: 'gcr.io/cloud-builders/terraform'
+    args: ['validate']
+  - name: 'gcr.io/cloud-builders/terraform'
+    args: ['apply']
+  - name: 'gcr.io/cloud-builders/kubectl'
+    args:
+      - 'apply'
+      - '-f'
+      - 'deployment.yaml'
+      # Add the flag here:
+      - '--insecure-skip-tls-verify=true'
+  - name: 'gcr.io/cloud-builders/kubectl'
+    args:
+      - 'apply'
+      - '-f'
+      - 'service.yaml'
+      # Add the flag here as well:
+      - '--insecure-skip-tls-verify=true'
+  - name: 'gcr.io/cloud-builders/kubectl'
+    args:
+      - 'apply'
+      - '-f'
+      - 'ingress.yaml'
+      # And here:
+      - '--insecure-skip-tls-verify=true'
