@@ -13,14 +13,13 @@ resource "google_compute_firewall" "acme_default_firewall" {
 
   allow {
     protocol = "icmp"
-    source_ranges = ["0.0.0.0/0"]
   }
 
   allow {
     protocol = "tcp"
     ports    = ["22", "80", "443"] 
-    source_ranges = ["0.0.0.0/0"] 
   }
+  source_ranges = ["0.0.0.0/0"] 
 }
 
 resource "google_container_cluster" "acme_app_cluster" {
