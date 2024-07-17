@@ -1,0 +1,16 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: acme-hello-app-ingress
+spec:
+  rules:
+    - host: acme-web-app.com
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: acme-hello-app-service
+                port:
+                  number: 443
