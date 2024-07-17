@@ -4,13 +4,10 @@ metadata:
   name: acme-hello-app-ingress
 spec:
   rules:
-    - host: acme-web-app.com
-      http:
+    - http:
         paths:
-          - pathType: Prefix
-            path: /
+          - path: /
+            pathType: Prefix
             backend:
-              service:
-                name: acme-hello-app-service
-                port:
-                  number: 443
+              serviceName: acme-hello-app-service
+              servicePort: 443
