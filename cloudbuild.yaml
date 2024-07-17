@@ -1,11 +1,11 @@
 steps:
   - name: 'gcr.io/cloud-builders/gcloud'
     args: ['auth', 'configure-docker']
-  - name: 'gcr.io/cloud-builders/terraform'
+  - name: 'gcr.io/cloud-builders/terraform:1.5.7' 
     args: ['init', '-backend=remote']
-  - name: 'gcr.io/cloud-builders/terraform'
+  - name: 'gcr.io/cloud-builders/terraform:1.5.7'
     args: ['validate']
-  - name: 'gcr.io/cloud-builders/terraform'
+  - name: 'gcr.io/cloud-builders/terraform:1.5.7'
     args: ['apply']
   - name: 'gcr.io/cloud-builders/kubectl'
     args:
