@@ -31,8 +31,4 @@ resource "google_container_cluster" "acme_app_cluster" {
   }
 
   network = google_compute_network.acme_network.self_link
-
-  release_channel {
-    channel = "AUTO_PILOT"
-  }
 }
