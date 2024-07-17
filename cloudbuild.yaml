@@ -1,10 +1,15 @@
 steps:
-- name: 'gcr-auth'
-  args: ['--cred', '...']  
-  use: 'gcr/gcloud'
-- name: 'terraform-init'
-  cmd: ['terraform', 'init']
-- name: 'terraform-plan'  # 
-  cmd: ['terraform', 'plan']
-- name: 'deploy' 
-  cmd: ['kubectl', 'apply', '-f', 'deployment.yaml']
+- name: 'gcr.io/cloud-builders/gcloud'
+  args: ['auth', 'configure-docker']
+- name: 'gcr.io/cloud-builders/terraform'
+  args: ['init', '-backend=remote']
+- name: 'gcr.io/cloud-builders/terraform'
+  args: ['validate']
+- name: 'gcr.io/cloud-builders/terraform'
+  args: ['apply']
+- name: 'gcr.io/cloud-builders/kubectl'
+  args: ['apply', '-f', 'deployment.yaml']
+- name: 'gcr.io/cloud-builders/kubectl'
+  args: ['apply', '-f', 'service.yaml']
+- name: 'gcr.io/cloud-builders/kubectl'  # Optional for Ingress approach
+  args: ['apply', '-f', 'ingress.yaml']
