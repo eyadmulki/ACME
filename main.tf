@@ -6,11 +6,19 @@ provider "google" {
 resource "google_compute_network" "acme_network" {
   name = "acme-network"
 }
-resource "google_compute_subnetwork" "acme_subnet" {
-  name          = "acme-subnet"
-  ip_cidr_range = "10.0.0.0/16"
-  region        = "europe-west10"
-  network       = google_compute_network.acme_network.id
+
+resource "google_compute_firewall" "acme_default_firewall" {
+  name    = "acme-default-firewall"
+  network = google_compute_network.acme_network.name
+
+  allow {
+    protocol = "icmp"
+  }
+
+  allow {
+    protocol = "tcp"
+    ports    = ["22", "80", "443"]  
+  }
 }
 
 resource "google_container_cluster" "acme_app_cluster" {
@@ -18,8 +26,13 @@ resource "google_container_cluster" "acme_app_cluster" {
   location = "europe-west10-a"
   initial_node_count = 2
 
-  # Enable Network Policy for Pod Security
   network_policy {
     enabled = true
+  }
+
+  network = google_compute_network.acme_network.self_link
+
+  release_channel {
+    channel = "AUTO_PILOT"
   }
 }
