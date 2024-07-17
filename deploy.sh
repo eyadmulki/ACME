@@ -2,7 +2,8 @@
 
 terraform init
 terraform validate
-terraform apply
+terraform apply -auto-approve
 
-kubectl apply -f deployment.yaml
-kubectl apply -f service.yaml
+kubectl apply -f deployment.yaml --insecure-skip-tls-verify=true
+kubectl apply -f service.yaml --insecure-skip-tls-verify=true
+kubectl apply -f ingress.yaml --insecure-skip-tls-verify=true
